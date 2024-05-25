@@ -24,11 +24,20 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
 
+      - name: Find the latest JAR file
+        id: find-jar
+        run: |
+          JAR_FILE=$(ls -t /build/libs/*.jar | head -n 1)
+          echo "JAR_FILE=$JAR_FILE" >> $GITHUB_ENV
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
           name: java-app
-          path: "${{ github.workspace }}/build/libs/*.jar"
+          # path: "${{ github.workspace }}/build/libs/*.jar"
+          path: "${{ env.JAR_FILE }}"
+        env:
+          JAR_FILE: ${{ env.JAR_FILE }}
 
   deploy:
     runs-on: ubuntu-latest
