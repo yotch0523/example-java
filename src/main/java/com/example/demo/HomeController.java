@@ -9,6 +9,6 @@ import org.springframework.web.servlet.ModelAndView;
 public class HomeController {
     @GetMapping("/")
     public String home() {
-        return "Hello, world";   
+        return "Good Evening, world";   
     }
 }
